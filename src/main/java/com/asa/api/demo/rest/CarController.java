@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -19,15 +16,21 @@ import java.util.UUID;
 @RequestMapping("/api/cars")
 public class CarController {
 
+    private List<Car> cars = new ArrayList<>();
+
+    public CarController() {
+        initCarList();
+    }
+
     @PostMapping("add")
     public ResponseEntity<Car> addCar(@RequestBody Car car){
         car.setId(UUID.randomUUID().toString());
-        getCarList().add(car);
+        cars.add(car);
         return ResponseEntity.ok(car);
     }
     @GetMapping("{id}")
     public ResponseEntity<?> getCar(@PathVariable String id) {
-       for(Car c : getCarList()) {
+       for(Car c : cars) {
            if(c.getId().equals(id)) {
                return ResponseEntity.ok(c);
            }
@@ -36,7 +39,7 @@ public class CarController {
     }
     @GetMapping("list")
     public ResponseEntity<List<Car>> getCars() {
-       return ResponseEntity.ok(getCarList());
+       return ResponseEntity.ok(cars);
     }
 
     @PutMapping("{id}")
@@ -44,9 +47,20 @@ public class CarController {
         //TODO
         return new ResponseEntity<String>("error.car.not.found", HttpStatus.BAD_REQUEST);
     }
-    private List<Car> getCarList() {
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Boolean> deleteCar(@PathVariable String id) {
+        for(Car car : cars) {
+            if( car.getId().equals(id)){
+                cars.remove(car);
+                break;
+            }
+        }
+        return ResponseEntity.ok(Boolean.TRUE);
+    }
+    private void initCarList() {
         Car c1= Car.builder()
-                .id(UUID.randomUUID().toString())
+                .id("198d4e4e-2f78-418d-8996-e246f5e1054f")
                 .category(Category.Urban.name())
                 .mark(Mark.Peugeot.name())
                 .model("206")
@@ -55,7 +69,7 @@ public class CarController {
                 .power(12)
                 .build();
         Car c2= Car.builder()
-                .id(UUID.randomUUID().toString())
+                .id("db6a5f77-94c0-4bb1-8a66-1316cfe84ae0")
                 .category(Category.Sedan.name())
                 .mark(Mark.Renault.name())
                 .model("R8")
@@ -64,7 +78,7 @@ public class CarController {
                 .power(4)
                 .build();
         Car c3= Car.builder()
-                .id(UUID.randomUUID().toString())
+                .id("fcd238bd-4b72-4b06-b500-872795cc3867")
                 .category(Category.Cabriolet.name())
                 .mark(Mark.Volkswagen.name())
                 .model("Golf")
@@ -73,7 +87,7 @@ public class CarController {
                 .power(125)
                 .build();
 
-        return Arrays.asList(c1, c2, c3);
+        cars.addAll(Arrays.asList(c1, c2, c3));
     }
 
 }
