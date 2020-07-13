@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -17,6 +18,12 @@ public class DemoApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApiApplication.class, args);
 	}
+
+//	@Bean
+//	public MethodValidationPostProcessor methodValidationPostProcessor() {
+//		return new MethodValidationPostProcessor();
+//	}
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer(){
 		return new WebMvcConfigurer() {
