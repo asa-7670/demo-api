@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.junit.Assert.*;
 
+import com.asa.api.demo.constant.Dropdown;
 import com.asa.api.demo.constant.car.Category;
 import com.asa.api.demo.constant.car.Energy;
 import com.asa.api.demo.constant.car.Mark;
@@ -76,7 +77,32 @@ public class CarControllerTest {
         verify(carService, times(1)).deleteCar(idCaptor.getValue());
     }
 
+    @Test
+    public void testGetCategories() {
+        List<Dropdown> result = carController.getCategories();
+        for(Dropdown dp: result) {
+            assertEquals(dp.getKey(), Category.of(dp.getKey()).getCode());
+            assertEquals(dp.getValue(), Category.of(dp.getKey()).name());
+        }
+    }
 
+    @Test
+    public void testGetEnergies() {
+        List<Dropdown> result = carController.getEnergies();
+        for(Dropdown dp: result) {
+            assertEquals(dp.getKey(), Energy.of(dp.getKey()).getCode());
+            assertEquals(dp.getValue(), Energy.of(dp.getKey()).name());
+        }
+    }
+
+    @Test
+    public void testGetMarks() {
+        List<Dropdown> result = carController.getMarks();
+        for(Dropdown dp: result) {
+            assertEquals(dp.getKey(), Mark.of(dp.getKey()).getCode());
+            assertEquals(dp.getValue(), Mark.of(dp.getKey()).name());
+        }
+    }
     private Optional<Car> getCar() {
         return Optional.of(Car.builder()
                 .category(Category.Urban.name())

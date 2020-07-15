@@ -8,42 +8,39 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 @RunWith(MockitoJUnitRunner.class)
-public class EnergyTest {
+public class CategoryTest {
 
     @Test
     public void getCode() {
-        assertEquals(Energy.Essence.getCode(), "ES");
-        assertEquals(Energy.Diesel.getCode(), "GA");
-        assertEquals(Energy.Electric.getCode(), "EL");
+        assertEquals(Category.Urban.getCode(), "UR");
+        assertEquals(Category.Sedan.getCode(), "SE");
+        assertEquals(Category.Break.getCode(), "BR");
+        assertEquals(Category.Monospace.getCode(), "MO");
+        assertEquals(Category.Coupe.getCode(), "CO");
+        assertEquals(Category.Cabriolet.getCode(), "CA");
+        assertEquals(Category.Pickup.getCode(), "PI");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void of_WithNullValue() {
-        Energy.of(null);
+        Category.of(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void of_WithEmptyValue() {
-        Energy.of("");
+        Category.of("");
     }
 
     @Test(expected = ResourceException.class)
     public void of_WithInvalidValue() {
-        Energy.of("INVALID");
+        Category.of("INVALID");
     }
-
-    @Test
-    public void of() {
-        assertEquals(Energy.Essence.of("ES"), Energy.Essence);
-        assertEquals(Energy.Diesel.of("GA"), Energy.Diesel);
-        assertEquals(Energy.Electric.of("EL"), Energy.Electric);
-    }
-
     @Test
     public void testGetDropdown() {
-        List<Dropdown> result = Energy.getDropDown();
-        assertEquals(result.size(), 3);
+        List<Dropdown> result = Category.getDropDown();
+        assertEquals(result.size(), 7);
     }
 }

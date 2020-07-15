@@ -1,5 +1,9 @@
 package com.asa.api.demo.rest;
 
+import com.asa.api.demo.constant.Dropdown;
+import com.asa.api.demo.constant.car.Category;
+import com.asa.api.demo.constant.car.Energy;
+import com.asa.api.demo.constant.car.Mark;
 import com.asa.api.demo.model.Car;
 import com.asa.api.demo.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,21 @@ public class CarController {
     @DeleteMapping("{id}")
     public boolean deleteCar(@PathVariable String id) {
         return carService.deleteCar(id);
+    }
+
+    @GetMapping("dropdown/categories")
+    public List<Dropdown> getCategories() {
+       return Category.getDropDown();
+    }
+
+    @GetMapping("dropdown/energies")
+    public List<Dropdown> getEnergies() {
+        return Energy.getDropDown();
+    }
+
+    @GetMapping("dropdown/marks")
+    public List<Dropdown> getMarks() {
+        return Mark.getDropDown();
     }
 
 }
